@@ -1,4 +1,4 @@
-use std::thread::{self, JoinHandle, Thread};
+use std::thread;
 use std::sync::{mpsc, Mutex};
 use std::sync::Arc;
 
@@ -66,7 +66,6 @@ impl Worker {
         let thread = thread::spawn(move || {
             loop {
                 let msg = receiver.lock().unwrap().recv().unwrap();
-                
                 match msg {
                     Message::NewJob(job) => job(),
                     Message::Terminate => break,
